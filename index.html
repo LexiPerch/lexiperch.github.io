@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Grow your vocabulary with LexiPerch: explore 1,000 words, practice with quizzes, and play a word-building puzzle.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="LexiPerch — Grow your vocabulary">
+  <meta property="og:description" content="Explore new words, practice with quizzes, and play a word-building puzzle.">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#7665d8">
+  <title>LexiPerch — Grow your vocabulary</title>
+  <link rel="icon" type="image/svg+xml" href="lexiperch-favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell" id="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Primary navigation">
+      <a class="brand" id="brand-home" href="#dashboard" aria-label="LexiPerch home">
+        <img class="brand-logo" src="lexiperch-logo.svg" alt="" width="40" height="40">
+        <span>Lexi<span class="brand-light">Perch</span></span>
+      </a>
+      <p class="nav-label">LEARN</p>
+      <nav class="nav" aria-label="Learning sections">
+        <button class="nav-item active" data-view="dashboard"><span>▦</span> Dashboard</button>
+        <button class="nav-item" data-view="dictionary"><span>▤</span> Explore words</button>
+        <button class="nav-item" data-view="practice"><span>✳</span> Practice quiz</button>
+        <button class="nav-item" data-view="puzzle"><span aria-hidden="true">&#9672;</span> Word puzzle</button>
+        <button class="nav-item" data-view="saved"><span>♡</span> Saved words <span class="nav-count" id="saved-count">0</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="streak-card">
+          <div class="streak-icon">✦</div>
+          <strong id="streak-title">Start a learning streak</strong>
+          <p id="streak-copy">Explore a word or answer a quiz question to record a learning day.</p>
+        </div>
+        <div class="profile">
+          <div class="avatar" id="profile-avatar" aria-hidden="true">L</div>
+          <div><strong id="profile-name">Learner</strong><small><button class="profile-edit" id="edit-profile">Edit name</button></small></div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-button" id="menu-button" type="button" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">☰</button>
+        <div class="breadcrumb">Learning space <span>/</span> <strong id="page-crumb">Dashboard</strong></div>
+        <div class="top-actions"><span class="today-pill">✦ Your daily word journey</span></div>
+      </header>
+
+      <section class="view active" id="view-dashboard">
+        <div class="welcome-row">
+          <div>
+            <p class="eyebrow">YOUR PERSONAL VOCABULARY COACH</p>
+            <h1>Words open <em>worlds.</em></h1>
+            <p class="subheading">Grow your vocabulary, one meaningful word at a time.</p>
+          </div>
+          <div class="date-chip" id="today-date"></div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-copy">
+            <span class="hero-tag">✦ WORD OF THE DAY</span>
+            <h2 id="daily-word"></h2>
+            <p class="pronunciation" id="daily-pronunciation"></p>
+            <p class="hero-definition" id="daily-definition"></p>
+            <p class="example"><span>IN A SENTENCE</span><br><i id="daily-example"></i></p>
+            <div class="hero-buttons">
+              <button class="button button-light" id="learn-daily">Explore this word <span>↗</span></button>
+              <button class="button button-light listen-button" id="speak-daily" aria-label="Hear daily word">Hear it</button>
+              <button class="icon-button hero-save" id="save-daily" aria-label="Save word">♡</button>
+            </div>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+            <div class="floating-letter letter-a">A</div><div class="floating-letter letter-b">b</div>
+            <div class="floating-letter letter-c">Z</div><div class="book-shape"><span>W</span></div>
+            <div class="spark spark-one">✦</div><div class="spark spark-two">✧</div>
+          </div>
+        </div>
+
+        <div class="section-heading">
+          <div><p class="eyebrow">KEEP THE MOMENTUM</p><h2>Your learning at a glance</h2></div>
+          <button class="text-button" data-goto="practice">Practice now <span>→</span></button>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-icon lavender">▤</div><div><p>Words explored</p><strong id="stat-explored">0</strong><small>Keep discovering</small></div></article>
+          <article class="stat-card"><div class="stat-icon mint">♡</div><div><p>Saved words</p><strong id="stat-saved">0</strong><small>Your personal collection</small></div></article>
+          <article class="stat-card"><div class="stat-icon peach">✓</div><div><p>Quiz answers correct</p><strong id="stat-correct">0</strong><small>Practice makes progress</small></div></article>
+        </div>
+
+        <div class="section-heading word-section-heading">
+          <div><p class="eyebrow">A LITTLE DISCOVERY</p><h2>Words to know</h2></div>
+          <button class="text-button" data-goto="dictionary">See all words <span>→</span></button>
+        </div>
+        <div class="word-grid" id="featured-words"></div>
+      </section>
+
+      <section class="view" id="view-dictionary">
+        <div class="page-heading"><p class="eyebrow">YOUR NEXT DISCOVERY</p><h1>Explore words</h1><p class="subheading">Find a word, understand it, and make it part of your vocabulary.</p></div>
+        <div class="dictionary-toolbar">
+          <button class="button button-primary" id="toggle-word-form" aria-expanded="false" aria-controls="word-form-panel">Add a word</button>
+          <div class="backup-actions">
+            <button class="button button-outline" id="export-data">Export backup</button>
+            <button class="button button-outline" id="import-data">Import backup</button>
+            <input class="hidden" id="import-file" type="file" accept="application/json,.json" aria-label="Choose a LexiPerch backup file">
+          </div>
+        </div>
+        <p class="storage-note">Your custom words, saved words, and learning progress stay in this browser. They are not uploaded to an account or synced across devices. Export a backup before switching browsers or devices, or clearing browser data.</p>
+        <section class="word-form-panel hidden" id="word-form-panel" aria-labelledby="word-form-title">
+          <div class="form-heading"><div><p class="eyebrow">YOUR PERSONAL DICTIONARY</p><h2 id="word-form-title">Add a word</h2></div><button type="button" class="form-close" id="close-word-form" aria-label="Close word form">×</button></div>
+          <form id="word-form">
+            <div class="form-grid">
+              <label>Word<input id="entry-word" name="word" required maxlength="60" autocomplete="off"></label>
+              <label>Part of speech<select id="entry-type" name="type"><option>noun</option><option>verb</option><option>adjective</option><option>adverb</option><option>other</option></select></label>
+              <label>Pronunciation <span class="field-optional">(optional)</span><input id="entry-pronunciation" name="pronunciation" maxlength="80" placeholder="e.g. /ˈwɜːd/"></label>
+              <label>Difficulty<select id="entry-level" name="level"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></label>
+              <label class="form-wide">Meaning<textarea id="entry-definition" name="definition" required maxlength="500" rows="2"></textarea></label>
+              <label class="form-wide">Example sentence<textarea id="entry-example" name="example" required maxlength="300" rows="2"></textarea></label>
+            </div>
+            <div class="form-actions"><button class="button button-primary" id="save-word-entry" type="submit">Add to my dictionary</button><button class="button button-outline" id="cancel-word-edit" type="button">Cancel</button><p class="form-message" id="word-form-message" role="status" aria-live="polite"></p></div>
+          </form>
+        </section>
+        <div class="search-row"><label class="search-box"><span>⌕</span><input id="word-search" type="search" placeholder="Search words, meanings, or examples..." aria-label="Search vocabulary"></label><select id="level-filter" aria-label="Filter by level"><option value="all">All levels</option><option value="Beginner">Beginner</option><option value="Intermediate">Intermediate</option><option value="Advanced">Advanced</option></select></div>
+        <div class="results-meta"><span id="results-count">Words for your journey</span><span>Tap a card to explore</span></div>
+        <div class="word-grid" id="dictionary-words"></div>
+        <div class="dictionary-load-more"><button class="button button-outline hidden" id="load-more-words" type="button">Load more words</button></div>
+        <p class="empty-state hidden" id="dictionary-empty">No matching words found. Try a different search.</p>
+      </section>
+
+      <section class="view" id="view-practice">
+        <div class="page-heading"><p class="eyebrow">TEST YOUR KNOWLEDGE</p><h1>Practice quiz</h1><p class="subheading">Choose the best meaning. Learn from every answer.</p></div>
+        <div class="quiz-layout">
+          <div class="quiz-card">
+          <div class="quiz-top"><span class="quiz-label">VOCABULARY CHECK</span><span id="quiz-progress" aria-live="polite" aria-atomic="true">QUESTION 1</span></div>
+            <div class="quiz-progress-track"><div id="quiz-progress-fill"></div></div>
+            <p class="quiz-instruction">What does this word mean?</p>
+            <h2 id="quiz-word" aria-live="polite" aria-atomic="true"></h2>
+            <p class="quiz-pronunciation" id="quiz-pronunciation"></p>
+            <div class="answer-list" id="answer-list"></div>
+            <div class="quiz-feedback" id="quiz-feedback" aria-live="polite"></div>
+            <div class="quiz-footer" id="quiz-footer"><span id="quiz-score">Score: 0</span><button class="button button-primary" id="next-question" disabled>Next question →</button></div>
+          </div>
+          <aside class="quiz-tip"><div class="tip-icon">✦</div><h3>Learning tip</h3><p>Try using a new word in a sentence of your own. Connecting it to your life helps it stick.</p><div class="tip-divider"></div><p class="tip-small">No pressure. Every attempt is progress.</p></aside>
+        </div>
+      </section>
+
+      <section class="view" id="view-puzzle">
+        <div class="page-heading"><p class="eyebrow">PLAY AND LEARN</p><h1>Word builder</h1><p class="subheading">Use the meaning clue to put the scrambled letters in order.</p></div>
+        <div class="puzzle-card" id="puzzle-round-panel">
+          <div class="puzzle-topline"><span id="puzzle-round-label">ROUND 1 OF 5</span><span id="puzzle-score">Score: 0</span></div>
+          <div class="puzzle-progress-track" id="puzzle-progress-track" role="progressbar" aria-label="Puzzle progress" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="puzzle-progress-fill"></div></div>
+          <div class="puzzle-clue"><p class="eyebrow">MEANING CLUE</p><h2 id="puzzle-definition" aria-live="polite" aria-atomic="true"></h2><span id="puzzle-type" class="puzzle-type"></span></div>
+          <p class="puzzle-instruction">Tap the letters to build the word. Tap a placed letter to return it.</p>
+          <div class="puzzle-answer" id="puzzle-answer" role="group" aria-label="Your answer"></div>
+          <div class="puzzle-tiles" id="puzzle-tiles" role="group" aria-label="Scrambled letter tiles"></div>
+          <p class="puzzle-status" id="puzzle-status" role="status" aria-live="polite"></p>
+          <div class="puzzle-controls">
+            <button class="button button-outline" id="puzzle-hint" type="button">Hint (8 pts)</button>
+            <button class="button button-outline" id="puzzle-shuffle" type="button">Shuffle letters</button>
+            <button class="button button-outline" id="puzzle-clear" type="button">Clear</button>
+            <button class="button button-primary" id="puzzle-check" type="button">Check word</button>
+          </div>
+        </div>
+        <div class="puzzle-complete hidden" id="puzzle-complete" role="status" aria-live="polite">
+          <div class="empty-icon">&#10022;</div><p class="eyebrow">PUZZLE COMPLETE</p><h2>Nice wordcraft!</h2><p id="puzzle-result"></p>
+          <button class="button button-primary" id="puzzle-play-again" type="button">Play another round</button>
+        </div>
+      </section>
+
+      <section class="view" id="view-saved">
+        <div class="page-heading"><p class="eyebrow">YOUR PERSONAL COLLECTION</p><h1>Saved words</h1><p class="subheading">The words you want to remember, all in one place.</p></div>
+        <div class="word-grid" id="saved-words"></div>
+        <div class="empty-panel hidden" id="saved-empty"><div class="empty-icon">♡</div><h3>Your collection starts here</h3><p>Save words as you explore them, and they’ll appear on this page.</p><button class="button button-primary" data-goto="dictionary">Explore words</button></div>
+      </section>
+
+      <footer class="footer"><span>© <span id="year"></span> LexiPerch</span><span>Vocabulary data: <a href="https://wordnet.princeton.edu/" target="_blank" rel="noreferrer">WordNet 3.0</a> · <a href="WORDNET_LICENSE.txt">License</a></span><span>Curiosity is a beautiful habit. <b>✦</b></span></footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="word-modal" role="dialog" aria-modal="true" aria-labelledby="modal-word" aria-describedby="modal-definition">
+    <div class="word-modal">
+      <button class="modal-close" id="modal-close" aria-label="Close word details">×</button>
+      <p class="eyebrow">WORD EXPLORER</p>
+      <h2 id="modal-word">Word</h2>
+      <p class="modal-pronunciation" id="modal-pronunciation"></p>
+      <span class="level-badge" id="modal-level"></span>
+      <p class="modal-definition" id="modal-definition"></p>
+      <div class="modal-example"><span>EXAMPLE</span><p id="modal-example"></p></div>
+      <div class="modal-actions"><button class="button button-primary" id="modal-save">♡ Save word</button><button class="button button-outline" id="modal-speak">Hear word</button><button class="button button-outline hidden" id="modal-edit">Edit word</button><button class="button button-outline hidden" id="modal-delete">Delete word</button><button class="button button-outline" id="modal-done">Done</button></div>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="vocabulary.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
